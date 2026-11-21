@@ -608,3 +608,35 @@ five skill validations. Rechecked whitespace and public-repository hygiene befor
 committing. Media, credentials, local review storage and personal configuration
 remain ignored. No architecture or implementation changes were needed for this
 publication step.
+
+## 2026-11-21 — Arabic word-by-word captions on an uncut promo take
+
+Captions-only job: an uncut 19 s Darija talking-head promo got animated Arabic
+captions matched to a supplied caption-style reference. Picture untouched apart
+from the captions, and the original audio muxed back by stream copy (packet MD5
+matches the source). Rendered with HyperFrames 0.9.52 (`--sdr`).
+Style: white words appear one at a time and the line re-centres as it grows
+(spans switch from `display:none` to inline at each word's start, so the line
+never holds space for words not yet spoken), and the keyword pops in on a second
+line in a gradient pill.
+
+No skill files changed. Lessons:
+- whisper large-v3-turbo struggles with Algerian Darija and French loanwords
+  ("livraison gratuite" came out as one garbled word). Re-decoding short chunks or
+  forcing French made it worse. Use burned-in text in the source as ground truth
+  (it fixed "15 يورو" to "15 يوم"), and ship uncertain lines flagged for the
+  speaker to correct, not guessed silently.
+- Check the source for burned-in graphics before placing captions. Here a
+  mid-frame promo banner pushed the captions into the bottom platform-UI zone.
+- White caption text over a white shirt needs a dark stroke under the fill
+  (`paint-order: stroke fill`) to stay readable. Arabic joins survive the stroke.
+- Don't put `visibility` on a `.clip` (StaticGuard rejects it). Fade an inner
+  wrapper instead.
+- Muxing with `-shortest` trimmed 28 ms of the original audio. Leave it off when
+  the brief says "don't cut".
+- v2 same day: applied the speaker's corrected Darija script. Words were re-timed
+  to the pauses in the audio's RMS envelope, plus a second whisper pass prompted with the
+  corrected script. Prices and Latin names now sit in isolated word spans, so
+  "4500 دج" and "Fennec Herbs" keep their order inside the RTL line.
+  Lesson: once the client supplies the script, use the audio's pauses as group
+  boundaries. Whisper's word times drift by up to 0.4 s on Darija.

@@ -37,6 +37,7 @@ def main():
         commands.append([sys.executable, ".claude/skills/recap-video/scripts/smoke-test.py"])
     for command in commands:
         print("\nTEST  " + " ".join(command), flush=True)
+        command = [shutil.which(str(command[0])) or command[0], *command[1:]]  # Windows: npm is npm.cmd
         result = subprocess.run(command, cwd=ROOT, env=env)
         if result.returncode:
             return result.returncode

@@ -138,6 +138,19 @@ Invoke **branded-ad-edit** and run its phases in order:
    one.
 2. **Transcribe** with whisper-cli (word timestamps). The transcript drives
    captions, card-per-line timing, and the storyboard beats.
+   **Dialects and code-switching** (e.g. North-African Darija with French loanwords):
+   whisper garbles them, and re-decoding short chunks or forcing another language makes
+   it worse. Text already burned into the source counts as ground truth. Deliver
+   uncertain lines in a table, flagged, instead of guessing silently: the speaker's
+   corrected script is the real transcript. Once you have that script, time the caption
+   groups to the pauses in the audio's RMS envelope, because whisper's word times drift
+   by up to ~0.4 s.
+   **RTL captions with mixed tokens:** wrap each word in `unicode-bidi: isolate`, so a
+   Latin brand name or a "4500 دج" price keeps its internal order inside an RTL line.
+   Then check the order in a zoomed frame from the render.
+   Before placing captions, scan the source for burned-in graphics such as promo
+   banners. Captions go clear of them, and white text over a white garment needs a dark
+   stroke under the fill (`paint-order: stroke fill`).
 3. **Storyboard from the style guide.** Every spoken line maps to a beat:
    card, full-bleed cut, B-roll (capture real screens with `broll-capture`; GENERATE clips/overlays with `openart-broll` (MCP) or `arcads-broll` (REST)), or breather — per `STYLE-GUIDE.md` (or house
    defaults). Write the storyboard down before composing; it is the artifact
