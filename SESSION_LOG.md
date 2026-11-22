@@ -640,3 +640,27 @@ No skill files changed. Lessons:
   "4500 دج" and "Fennec Herbs" keep their order inside the RTL line.
   Lesson: once the client supplies the script, use the audio's pauses as group
   boundaries. Whisper's word times drift by up to 0.4 s on Darija.
+
+## 2026-11-21 — Five more promo clips captioned in a second reference style
+
+Captioned five more uncut Darija promo takes (IMG_7647 to IMG_7651) in a different
+caption reference. The look: a 1-3 word phrase in a dark glass pill, white bold Arabic,
+one orange keyword, the pill entering from a blur, each word wiping in right-to-left at
+its spoken time. Picture and audio are untouched (audio packet MD5 matches every
+source). The pill sits at frame centre, just below the face. One clip shot closer to
+camera uses a lower y, and one clip drops a few phrases while its moving burned-in
+graphic crosses the centre band. Placement was checked per clip on a 1 fps sheet with
+the band drawn in.
+Delivered as v1 with 49 lines flagged. Stretches I couldn't read were left uncaptioned
+and listed, not filled with invented text. The client accepted all five v1 files as
+delivered, with no corrections.
+
+Lessons:
+- Short-phrase captions need a minimum on-screen hold for the last word (>= 0.25-0.35 s).
+  Extend into the gap, merge only if the merged phrase stays short (<= 18 chars), and
+  otherwise pull the words' starts slightly earlier. A 5-word merge cap made pills
+  nearly full-width, which broke the reference's look.
+- A camera distance that differs between takes changes where the chin sits. Check the
+  pill band against the face for every clip, not just the first.
+- HyperFrames renders write large frame files to %TEMP%. On a nearly full system drive
+  they fail with ENOSPC partway through a batch. Point TEMP/TMP at a roomy drive.

@@ -218,6 +218,9 @@ Three render-time traps (2026-09-28, an organic reel from an HDR phone):
 - **The renderer's audio mixdown can land ~2.6 dB under the base.** For a cut that keeps the recorded
   level, stream-copy the render's video and mux the assembler's own AAC (`-map 0:v -map 1:a -c copy`),
   then re-measure integrated loudness and true peak.
+- **Renders write large frame files to the system temp folder.** On a nearly full system drive,
+  a batch fails partway through with `ENOSPC`. Check free space first, and point `TEMP`/`TMP` at a
+  roomy drive for the render.
 - **Judge legibility at phone width (≈ 390 px), not on the 1080 px comp.** A headline card survives
   the 2.8× shrink; body text, charts and desktop-layout screen recordings do not. Record scrolls at a
   540 px viewport with device scale 2 (same output size, double the text) and crop cards to the one
